@@ -11,15 +11,17 @@ Una pantalla, un input, ~50 respuestas esperadas.
 - Deploy en Vercel
 
 ## Cómo está armado
-El orden en pantalla es: título → input + botón → pregunta → instrucciones → gracias.
-Todo cabe en una pantalla sin scroll. Al enviar, solo el bloque del input se
-convierte en la confirmación; el resto de la nota se queda igual.
+El orden en pantalla es: título → input + botón → pregunta → instrucciones.
+Todo cabe en una pantalla sin scroll. Al mandar, la pantalla se vacía y queda
+únicamente el GRACIAS.
 
-- `src/app/page.tsx` — el título y la columna
+- `src/app/page.tsx` — la columna centrada; el contenido lo pone `NameForm`
 - `src/components/NameForm.tsx` — client component; `useActionState` para envío, error y el estado de gracias
 - `src/components/Lettering.tsx` — pinta las piezas de lettering; se invierten en modo oscuro
 - `src/lib/art.ts` — **el único lugar para redimensionar el lettering** (la clase de `size`)
 - `src/app/actions.ts` — server action: valida y escribe en Supabase
+- `src/app/error.tsx` — pantalla de rescate cuando la pestaña quedó abierta desde
+  antes de un deploy y el server action ya no existe
 - `supabase/schema.sql` — tabla `responses`, con RLS encendido y sin políticas
 
 ## Decisiones que no son obvias en el código
