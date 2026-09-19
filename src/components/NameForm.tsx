@@ -23,8 +23,12 @@ export function NameForm() {
 
   return (
     <form action={action} className="flex flex-col gap-7">
-      {/* 1. El título */}
-      <Lettering piece="nombre" priority className="-rotate-[0.6deg]" />
+      {/* 1. El título. Se sale de la columna a propósito: dentro de ella ya
+          estaba al 100% y no podía crecer más. Cambia el `w-[92vw]` o el
+          `max-w-[56rem]` para hacerlo más grande o más chico. */}
+      <div className="relative left-1/2 w-[92vw] max-w-[56rem] -translate-x-1/2">
+        <Lettering piece="nombre" priority className="-rotate-[0.6deg]" />
+      </div>
 
       {/* 2. El input y su botón */}
       <div className="flex flex-col gap-4">
