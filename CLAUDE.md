@@ -22,9 +22,12 @@ y al enviar todo lo de abajo del título se convierte en el GRACIAS.
 - `supabase/schema.sql` — tabla `responses`, con RLS encendido y sin políticas
 
 ## Decisiones que no son obvias en el código
-- **La escritura pasa por el servidor.** RLS sin políticas ⇒ la llave anon no puede
-  tocar la tabla; solo el `service_role`, que vive en el server action. Evita que
+- **La escritura pasa por el servidor.** RLS sin políticas ⇒ la llave publishable no
+  puede tocar la tabla; solo la secret key, que vive en el server action. Evita que
   alguien encuentre la llave pública y llene la tabla de basura.
+- **Se usan las llaves nuevas de Supabase** (`sb_publishable_` / `sb_secret_`), no las
+  legacy `anon` / `service_role`. La secret key además devuelve 401 si se llama desde
+  un navegador, así que una fuga accidental al cliente falla en vez de funcionar.
 - **El lettering es PNG con alfa, no SVG.** Vienen recortados a su trazo, así que
   `width`/`height` en `art.ts` son la proporción real y reservan espacio (sin CLS).
   Los originales sin recortar están en `art-originales/`.
@@ -37,8 +40,8 @@ y al enviar todo lo de abajo del título se convierte en el GRACIAS.
 
 ## Variables de entorno
 Copiar `.env.local.example` a `.env.local`. En Vercel, las mismas dos en
-Project Settings → Environment Variables. `SUPABASE_SERVICE_ROLE_KEY` nunca
-lleva el prefijo `NEXT_PUBLIC_`.
+Project Settings → Environment Variables. `SUPABASE_SECRET_KEY` nunca lleva el
+prefijo `NEXT_PUBLIC_`.
 
 ## Ver las respuestas
 Supabase → Table Editor → `responses`. Exportar a CSV desde ahí.
