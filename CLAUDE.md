@@ -5,6 +5,15 @@
 Formulario de una sola pregunta para nombrar la agencia creativa/marketing.
 Una pantalla, un input, ~50 respuestas esperadas.
 
+## Correr el proyecto
+`npm run dev` → http://localhost:3001
+
+**El puerto 3001 es a propósito.** En esta máquina hay otro proyecto con un API
+en el 3000; si ambos arrancan, uno agarra IPv4 y el otro IPv6 del mismo puerto,
+`localhost` cae al azar en cualquiera de los dos y los envíos del formulario
+aterrizan en el API equivocado (se ve como "an unexpected response was received
+from the server"). No regresar el puerto a 3000.
+
 ## Stack
 - Next.js 16 (App Router) + React 19 + Tailwind v4 + TypeScript
 - Supabase Postgres para guardar las respuestas
