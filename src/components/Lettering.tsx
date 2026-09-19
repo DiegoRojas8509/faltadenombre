@@ -1,10 +1,6 @@
 import Image from "next/image";
 import { ART, type ArtKey } from "@/lib/art";
 
-/**
- * El lettering es tinta negra sobre fondo transparente, así que en modo
- * oscuro se invierte a blanco en lugar de desaparecer.
- */
 export function Lettering({
   piece,
   className = "",
@@ -24,7 +20,7 @@ export function Lettering({
       height={art.height}
       priority={priority}
       sizes="(max-width: 640px) 100vw, 560px"
-      className={`h-auto ${art.size} dark:invert ${className}`}
+      className={`h-auto ${art.size} ${className}`}
     />
   );
 }

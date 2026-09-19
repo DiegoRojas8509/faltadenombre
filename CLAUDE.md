@@ -11,7 +11,10 @@ Una pantalla, un input, ~50 respuestas esperadas.
 - Deploy en Vercel
 
 ## Cómo está armado
-- `src/app/page.tsx` — la columna: título → intro → pregunta + input + botón
+El orden en pantalla es: título → input + botón → pregunta → instrucciones,
+y al enviar todo lo de abajo del título se convierte en el GRACIAS.
+
+- `src/app/page.tsx` — el título y la columna
 - `src/components/NameForm.tsx` — client component; `useActionState` para envío, error y el estado de gracias
 - `src/components/Lettering.tsx` — pinta las piezas de lettering; se invierten en modo oscuro
 - `src/lib/art.ts` — **el único lugar para redimensionar el lettering** (la clase de `size`)
@@ -25,8 +28,12 @@ Una pantalla, un input, ~50 respuestas esperadas.
 - **El lettering es PNG con alfa, no SVG.** Vienen recortados a su trazo, así que
   `width`/`height` en `art.ts` son la proporción real y reservan espacio (sin CLS).
   Los originales sin recortar están en `art-originales/`.
-- **La pregunta es el `<label>` del input.** `como.png` va dentro de un `<label for="name">`,
-  así que el lettering funciona como etiqueta real, no como decoración.
+- **Tema claro fijo** (`color-scheme: light`). El lettering es tinta negra, así que
+  seguir el modo oscuro del navegador obligaría a invertirlo; se decidió que se vea
+  igual para todos.
+- **La pregunta es el `<label>` del input**, aunque va debajo. `como.png` vive en un
+  `<label for="name">`: el `for` los asocia sin importar el orden visual, así que el
+  lettering funciona como etiqueta real y no como decoración.
 
 ## Variables de entorno
 Copiar `.env.local.example` a `.env.local`. En Vercel, las mismas dos en

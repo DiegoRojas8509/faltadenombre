@@ -6,17 +6,16 @@
   --color-ink: #16130f;
 }
 
+/* Siempre claro: el lettering es tinta negra y se ve igual para todos,
+   sin depender del modo oscuro del navegador. */
+html {
+  color-scheme: light;
+}
+
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background: var(--color-ink);
-    color: var(--color-paper);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
