@@ -1,1 +1,40 @@
 @AGENTS.md
+
+# Ponme un nombre
+
+Formulario de una sola pregunta para nombrar la agencia creativa/marketing.
+Una pantalla, un input, ~50 respuestas esperadas.
+
+## Stack
+- Next.js 16 (App Router) + React 19 + Tailwind v4 + TypeScript
+- Supabase Postgres para guardar las respuestas
+- Deploy en Vercel
+
+## Cómo está armado
+- `src/app/page.tsx` — la columna: título → intro → pregunta + input + botón
+- `src/components/NameForm.tsx` — client component; `useActionState` para envío, error y el estado de gracias
+- `src/components/Lettering.tsx` — pinta las piezas de lettering; se invierten en modo oscuro
+- `src/lib/art.ts` — **el único lugar para redimensionar el lettering** (la clase de `size`)
+- `src/app/actions.ts` — server action: valida y escribe en Supabase
+- `supabase/schema.sql` — tabla `responses`, con RLS encendido y sin políticas
+
+## Decisiones que no son obvias en el código
+- **La escritura pasa por el servidor.** RLS sin políticas ⇒ la llave anon no puede
+  tocar la tabla; solo el `service_role`, que vive en el server action. Evita que
+  alguien encuentre la llave pública y llene la tabla de basura.
+- **El lettering es PNG con alfa, no SVG.** Vienen recortados a su trazo, así que
+  `width`/`height` en `art.ts` son la proporción real y reservan espacio (sin CLS).
+  Los originales sin recortar están en `art-originales/`.
+- **La pregunta es el `<label>` del input.** `como.png` va dentro de un `<label for="name">`,
+  así que el lettering funciona como etiqueta real, no como decoración.
+
+## Variables de entorno
+Copiar `.env.local.example` a `.env.local`. En Vercel, las mismas dos en
+Project Settings → Environment Variables. `SUPABASE_SERVICE_ROLE_KEY` nunca
+lleva el prefijo `NEXT_PUBLIC_`.
+
+## Ver las respuestas
+Supabase → Table Editor → `responses`. Exportar a CSV desde ahí.
+
+## Pendiente
+- [ ] Definir el nombre real del proyecto (hoy el paquete se llama `formulario`)

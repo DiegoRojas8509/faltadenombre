@@ -1,41 +1,19 @@
-import Image from "next/image";
+import { Lettering } from "@/components/Lettering";
 import { NameForm } from "@/components/NameForm";
-
-/**
- * Único lugar donde se acomoda el formulario sobre el arte.
- * Los valores son % del alto/ancho del lienzo, así que escalan solos
- * en cualquier pantalla. Ajustar cuando lleguen los vectores finales.
- */
-const LAYOUT = {
-  aspect: "1080 / 1350", // proporción del arte (ancho / alto)
-  top: "62%", // dónde empieza el bloque del input
-  width: "68%", // ancho del bloque respecto al arte
-};
 
 export default function Page() {
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-neutral-100 p-4">
-      <div
-        className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl"
-        style={{ aspectRatio: LAYOUT.aspect }}
-      >
-        {/* Arte vectorizado de fondo — reemplazar por el SVG final */}
-        <Image
-          src="/art/background.svg"
-          alt=""
-          fill
-          priority
-          className="object-cover"
-        />
+    <main className="mx-auto flex min-h-dvh w-full max-w-[34rem] flex-col justify-center gap-9 px-6 py-14 sm:px-8">
+      <h1 className="sr-only">Ponme un nombre</h1>
 
-        {/* Capa del formulario */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{ top: LAYOUT.top, width: LAYOUT.width }}
-        >
-          <NameForm />
-        </div>
-      </div>
+      {/* 1. El título */}
+      <Lettering piece="nombre" priority className="-rotate-[0.6deg]" />
+
+      {/* 2. El contexto */}
+      <Lettering piece="holi" priority className="rotate-[0.3deg]" />
+
+      {/* 3. La pregunta + el input + el botón (y el gracias al enviar) */}
+      <NameForm />
     </main>
   );
 }

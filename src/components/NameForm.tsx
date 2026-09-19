@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { Lettering } from "@/components/Lettering";
 import { submitName, type SubmitState } from "@/app/actions";
 
 export function NameForm() {
@@ -11,16 +12,26 @@ export function NameForm() {
 
   if (state?.ok) {
     return (
-      <p className="text-center text-lg font-medium text-neutral-900">
-        Gracias, {state.message}.
-      </p>
+      <div
+        className="flex flex-col items-center gap-4 pt-2"
+        role="status"
+        aria-live="polite"
+      >
+        <Lettering piece="gracias" />
+        <p className="font-mono text-sm uppercase tracking-widest opacity-60">
+          Quedó anotado: {state.message}
+        </p>
+      </div>
     );
   }
 
+  const error = state && !state.ok ? state.message : null;
+
   return (
-    <form action={action} className="flex w-full flex-col gap-3">
-      <label htmlFor="name" className="sr-only">
-        Tu nombre
+    <form action={action} className="flex flex-col gap-4">
+      {/* La pregunta manuscrita ES el label del input */}
+      <label htmlFor="name" className="block cursor-pointer">
+        <Lettering piece="como" />
       </label>
 
       <input
@@ -29,25 +40,33 @@ export function NameForm() {
         type="text"
         required
         maxLength={80}
-        autoComplete="name"
-        placeholder="Tu nombre"
+        autoComplete="off"
+        autoCapitalize="words"
+        enterKeyHint="send"
         disabled={pending}
-        className="w-full rounded-full border border-neutral-300 bg-white/95 px-5 py-3 text-center text-base text-neutral-900 shadow-sm outline-none transition placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/15 disabled:opacity-60"
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? "name-error" : undefined}
+        className="w-full -rotate-[0.4deg] border-[3px] border-current bg-transparent px-4 py-3 font-mono text-lg outline-none placeholder:opacity-35 focus-visible:ring-4 focus-visible:ring-current/25 disabled:opacity-50"
+        placeholder="escribe aquí…"
       />
+
+      {error ? (
+        <p
+          id="name-error"
+          role="alert"
+          className="font-mono text-sm uppercase tracking-wide"
+        >
+          ↑ {error}
+        </p>
+      ) : null}
 
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-full bg-neutral-900 px-5 py-3 text-base font-medium text-white transition hover:bg-neutral-800 active:scale-[0.99] disabled:opacity-60"
+        className="min-h-[52px] rotate-[0.5deg] bg-ink px-6 py-3 font-mono text-base font-bold uppercase tracking-[0.2em] text-paper transition-transform duration-150 ease-out hover:-rotate-[0.5deg] active:scale-[0.98] disabled:opacity-50 dark:bg-paper dark:text-ink"
       >
-        {pending ? "Enviando…" : "Enviar"}
+        {pending ? "Mandando…" : "Mandar"}
       </button>
-
-      {state && !state.ok ? (
-        <p role="alert" className="text-center text-sm text-red-600">
-          {state.message}
-        </p>
-      ) : null}
     </form>
   );
 }
