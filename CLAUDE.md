@@ -11,8 +11,9 @@ Una pantalla, un input, ~50 respuestas esperadas.
 - Deploy en Vercel
 
 ## Cómo está armado
-El orden en pantalla es: título → input + botón → pregunta → instrucciones,
-y al enviar todo lo de abajo del título se convierte en el GRACIAS.
+El orden en pantalla es: título → input + botón → pregunta → instrucciones → gracias.
+Todo cabe en una pantalla sin scroll. Al enviar, solo el bloque del input se
+convierte en la confirmación; el resto de la nota se queda igual.
 
 - `src/app/page.tsx` — el título y la columna
 - `src/components/NameForm.tsx` — client component; `useActionState` para envío, error y el estado de gracias
@@ -45,6 +46,10 @@ prefijo `NEXT_PUBLIC_`.
 
 ## Ver las respuestas
 Supabase → Table Editor → `responses`. Exportar a CSV desde ahí.
+
+## Verificado el 2026-09-19
+Circuito completo probado contra el Supabase real: conexión, insert desde el
+formulario, lectura y borrado. La tabla quedó en 0 filas (se limpiaron las pruebas).
 
 ## Pendiente
 - [ ] Definir el nombre real del proyecto (hoy el paquete se llama `formulario`)

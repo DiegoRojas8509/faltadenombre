@@ -20,7 +20,7 @@ export function Lettering({
       height={art.height}
       priority={priority}
       sizes="(max-width: 640px) 100vw, 560px"
-      className={`h-auto ${art.size} ${className}`}
+      className={`mx-auto h-auto ${art.size} ${className}`}
     />
   );
 }

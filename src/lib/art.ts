@@ -19,21 +19,21 @@ export const ART = {
     width: 1800,
     height: 536,
     alt: "Hola, estamos creando una agencia creativa / marketing… sólo di lo que te nazca del cul*",
-    size: "w-full",
+    size: "w-[72%]",
   },
   como: {
     src: "/art/como.png",
     width: 1800,
     height: 472,
     alt: "Si tuvieras un negocio, ¿cómo le pondrías?",
-    size: "w-full",
+    size: "w-[78%]",
   },
   gracias: {
     src: "/art/gracias.png",
     width: 1396,
     height: 462,
     alt: "Gracias <3",
-    size: "w-3/4",
+    size: "w-[44%]",
   },
 } as const;
 
